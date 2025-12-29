@@ -1,5 +1,5 @@
-import Data.List (sortBy, transpose)
-import Data.Ord (comparing)
+import Data.List (sortBy, minimumBy)
+import Data.Ord (comparing, Down (Down))
 
 data Jogador = Jogador {
     nomeJogador :: String,
@@ -9,46 +9,36 @@ data Jogador = Jogador {
 data Time = Time {
     nomeTime :: String,
     elenco :: [Jogador],
-    forcaTotal :: Int 
+    forcaTotal :: Int
 } deriving (Show)
-
--- Função Auxiliar: Corta uma lista em pedaços de tamanho N
--- chunksOf 2 [1,2,3,4] -> [[1,2], [3,4]]
-chunksOf :: Int -> [a] -> [[a]]
-chunksOf _ [] = []
-chunksOf n lista = take n lista : chunksOf n (drop n lista)
-
 
 
 montarTimesEquilibrados :: Int -> [Jogador] -> [Time]
 montarTimesEquilibrados qtdTimes jogadores =
     let
-        -- Ordenar decrescente por estrelas (do melhor pro pior)
-       
-        jogadoresOrdenados = sortBy (flip (comparing estrelas)) jogadores
-    
-        -- Agrupar em níveis 
-        gruposPorNivel = chunksOf qtdTimes jogadoresOrdenados
-        
-        -- Distribuir Transposição
-        -- Transforma [[Melhor1, Melhor2], [Pior1, Pior2]] 
-        -- em        [[Melhor1, Pior1],   [Melhor2, Pior2]]
-        elencosDistribuidos = transpose gruposPorNivel
-        
-        -- Criar os objetos Time finais com nomes
-        -- 'zip' junta o numero do time (1, 2...) com a lista de jogadores dele
-        criarTime (numero, listaJogadores) = Time {
-            nomeTime = "Time " ++ show numero,
-            elenco = listaJogadores,
-            forcaTotal = sum (map estrelas listaJogadores) -- Soma as estrelas
-        }
-        
-    in
-        map criarTime (zip [1..qtdTimes] elencosDistribuidos)
+        -- Ordenar decrescente por estrelas do melhor pro pior
+        jogadoresOrdenados = sortBy (comparing (Down . estrelas)) jogadores
+
+        -- Inicializar times vazios
+        inicializarTimes = map (\n -> Time { nomeTime = "Time " ++ show n, elenco = [], forcaTotal = 0 }) [1..qtdTimes]
+
+        -- Atribui um jogador ao time com menor força total e, em caso de empate, menor elenco
+        assignPlayer :: Jogador -> [Time] -> [Time]
+        assignPlayer jog timesList =
+            let indexed = zip3 (map forcaTotal timesList) (map (length . elenco) timesList) [0..]
+                (_, _, idx) = minimumBy (comparing (\(ft,len,i) -> (ft,len))) indexed
+                (before, t:after) = splitAt idx timesList
+                t' = t { elenco = elenco t ++ [jog], forcaTotal = forcaTotal t + estrelas jog }
+            in before ++ (t' : after)
+
+        -- Construir times aplicando o algoritmo guloso
+        timesFinal = foldl (flip assignPlayer) inicializarTimes jogadoresOrdenados
+
+    in timesFinal
 
 main :: IO ()
 main = do
-    
+
     let j1 = Jogador "Pelé" 5
     let j2 = Jogador "Zico" 5
     let j3 = Jogador "Neymar" 4
@@ -68,8 +58,9 @@ main = do
 
     let todos = [j1, j6, j3, j8, j2, j5, j4, j7, j8, j9, j10, j11, j12, j13, j16, j15, j14]
 
-    putStrLn "--- Times Equilibrados (2 Times) ---"
- 
+    putStrLn "--- Times Equilibrados (4 Times) ---"
+
     let times = montarTimesEquilibrados 4 todos
-    
+
     mapM_ print times
+    print todos
