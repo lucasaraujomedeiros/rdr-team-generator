@@ -13,8 +13,8 @@ data Time = Time {
 } deriving (Show)
 
 
-montarTimesEquilibrados :: Int -> [Jogador] -> [Time]
-montarTimesEquilibrados qtdTimes jogadores =
+montarTimesEquilibrados :: Int -> Int -> [Jogador] -> [Time]
+montarTimesEquilibrados qtdTimes maxPorTime jogadores =
     let
         -- Ordenar decrescente por estrelas do melhor pro pior
         jogadoresOrdenados = sortBy (comparing (Down . estrelas)) jogadores
@@ -22,11 +22,15 @@ montarTimesEquilibrados qtdTimes jogadores =
         -- Inicializar times vazios
         inicializarTimes = map (\n -> Time { nomeTime = "Time " ++ show n, elenco = [], forcaTotal = 0 }) [1..qtdTimes]
 
-        -- Atribui um jogador ao time com menor força total e, em caso de empate, menor elenco
+        -- Atribui um jogador ao time disponível (len < maxPorTime) com menor força total e, em caso de empate, menor elenco
         assignPlayer :: Jogador -> [Time] -> [Time]
         assignPlayer jog timesList =
-            let indexed = zip3 (map forcaTotal timesList) (map (length . elenco) timesList) [0..]
-                (_, _, idx) = minimumBy (comparing (\(ft,len,i) -> (ft,len))) indexed
+            let availIdxs = [ i | (t,i) <- zip timesList [0..], length (elenco t) < maxPorTime ]
+            in if null availIdxs
+               then timesList -- todos os times cheios; jogador não é atribuído
+               else
+                   let candidates = [ (forcaTotal (timesList !! i), length (elenco (timesList !! i)), i) | i <- availIdxs ]
+                       (_, _, idx) = minimumBy (comparing (\(ft,len,i) -> (ft,len,i))) candidates
                 (before, t:after) = splitAt idx timesList
                 t' = t { elenco = elenco t ++ [jog], forcaTotal = forcaTotal t + estrelas jog }
             in before ++ (t' : after)
@@ -34,7 +38,6 @@ montarTimesEquilibrados qtdTimes jogadores =
         -- Construir times aplicando o algoritmo guloso
         timesFinal = foldl (flip assignPlayer) inicializarTimes jogadoresOrdenados
 
-    in timesFinal
 
 main :: IO ()
 main = do
@@ -56,11 +59,11 @@ main = do
     let j15 = Jogador "Nicolas" 3
     let j16 = Jogador "Ronaldo" 3
 
-    let todos = [j1, j6, j3, j8, j2, j5, j4, j7, j8, j9, j10, j11, j12, j13, j16, j15, j14]
+    let todos = [j1, j6, j3, j8, j2, j5, j4, j7, j9, j10, j11, j12, j13, j16, j15, j14]
 
     putStrLn "--- Times Equilibrados (4 Times) ---"
 
-    let times = montarTimesEquilibrados 4 todos
+    -- Exemplo: 4 times com até 4 jogadores cada
+    let times = montarTimesEquilibrados 4 3 todos
 
-    mapM_ print times
-    print todos
+    mapM_ (\t -> print t >> putStrLn "") times
