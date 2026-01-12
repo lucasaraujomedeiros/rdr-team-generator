@@ -1,5 +1,6 @@
 import Data.List (sortBy, minimumBy)
 import Data.Ord (comparing, Down (Down))
+import System.IO (hFlush, stdout)
 
 data Jogador = Jogador {
     nomeJogador :: String,
@@ -31,39 +32,59 @@ montarTimesEquilibrados qtdTimes maxPorTime jogadores =
                else
                    let candidates = [ (forcaTotal (timesList !! i), length (elenco (timesList !! i)), i) | i <- availIdxs ]
                        (_, _, idx) = minimumBy (comparing (\(ft,len,i) -> (ft,len,i))) candidates
-                (before, t:after) = splitAt idx timesList
-                t' = t { elenco = elenco t ++ [jog], forcaTotal = forcaTotal t + estrelas jog }
+                       (before, t:after) = splitAt idx timesList
+                       t' = t { elenco = elenco t ++ [jog], forcaTotal = forcaTotal t + estrelas jog }
             in before ++ (t' : after)
 
         -- Construir times aplicando o algoritmo guloso
         timesFinal = foldl (flip assignPlayer) inicializarTimes jogadoresOrdenados
+        in timesFinal
 
+-- Função para ler tudo numa mesma linha
+prompt :: String -> IO String
+prompt texto = do
+    putStr texto
+    hFlush stdout
+    getLine
+
+-- Construir lista com os jogadores cadastrados
+cadastrarJogadores :: Int -> IO [Jogador]
+cadastrarJogadores contador = do
+    putStrLn ("\n--- Jogador " ++ show contador ++ " ---")
+    
+    nome <- prompt "Nome (Enter vazio para encerrar): "
+    
+    if null nome
+        then return []
+        else do
+            estrelasStr <- prompt "Estrelas (1-5): "
+            let estrelasInt = read estrelasStr :: Int 
+            
+            restoDaLista <- cadastrarJogadores (contador + 1)
+            
+            return (Jogador nome estrelasInt : restoDaLista)
 
 main :: IO ()
 main = do
+    putStrLn "--- GERADOR DE TIMES ---"
 
-    let j1 = Jogador "Pelé" 5
-    let j2 = Jogador "Zico" 5
-    let j3 = Jogador "Neymar" 4
-    let j4 = Jogador "Ronaldo" 4
-    let j5 = Jogador "Bagre 1" 2
-    let j6 = Jogador "Bagre 2" 2
-    let j7 = Jogador "Perna de Pau 1" 1
-    let j8 = Jogador "Perna de Pau 2" 1
-    let j9 = Jogador "Pedro" 4
-    let j10 = Jogador "Gerson" 3
-    let j11 = Jogador "Pulgar" 5
-    let j12 = Jogador "Arrascaeta" 1
-    let j13 = Jogador "David" 2
-    let j14 = Jogador "Rossi" 4
-    let j15 = Jogador "Nicolas" 3
-    let j16 = Jogador "Ronaldo" 3
+    qtdTimesStr <- prompt "Quantos times? "
+    let qtdTimes = read qtdTimesStr :: Int
 
-    let todos = [j1, j6, j3, j8, j2, j5, j4, j7, j9, j10, j11, j12, j13, j16, j15, j14]
+    maxPorTimeStr <- prompt "Maximo de jogadores por time? "
+    let maxPorTime = read maxPorTimeStr :: Int
 
-    putStrLn "--- Times Equilibrados (4 Times) ---"
+    putStrLn "\n>>> Iniciando cadastro..."
+    todosJogadores <- cadastrarJogadores 1
 
-    -- Exemplo: 4 times com até 4 jogadores cada
-    let times = montarTimesEquilibrados 4 3 todos
+    putStrLn "\n=========================================="
+    putStrLn "          RESULTADO DOS TIMES             "
+    putStrLn "=========================================="
 
-    mapM_ (\t -> print t >> putStrLn "") times
+    let times = montarTimesEquilibrados qtdTimes maxPorTime todosJogadores
+
+    mapM_ (\t -> do
+        putStrLn $ ">> " ++ nomeTime t ++ " (Força Total: " ++ show (forcaTotal t) ++ ")"
+        putStrLn $ "   Elenco: " ++ show [ (nomeJogador j, estrelas j) | j <- elenco t ]
+        putStrLn ""
+        ) times
