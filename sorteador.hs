@@ -1,6 +1,7 @@
 import Data.List (sortBy, minimumBy)
 import Data.Ord (comparing, Down (Down))
 import System.IO (hFlush, stdout)
+import Chaveamento (torneio, numJogosTorneio)
 
 data Jogador = Jogador {
     nomeJogador :: String,
@@ -88,3 +89,15 @@ main = do
         putStrLn $ "   Elenco: " ++ show [ (nomeJogador j, estrelas j) | j <- elenco t ]
         putStrLn ""
         ) times
+
+    putStr "Deseja realizar o chaveamento do torneio? (s/n): "
+    hFlush stdout
+    opcao <- getLine
+
+    if opcao == "s" || opcao == "S"
+        then do
+            putStrLn "\n=== Torneio Mata-Mata ==="
+            putStrLn $ "Quantidade de jogos: " ++ show (numJogosTorneio times)
+            torneio [nomeTime t | t <- times]
+        else do
+            putStrLn "\nEncerrando programa..."
