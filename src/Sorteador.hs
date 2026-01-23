@@ -1,0 +1,2 @@
+-- Importar implementação do sorteador do main para este arquivo. Integrar main com ele, deixando apenas interface e chamada de funções no main.
+--
