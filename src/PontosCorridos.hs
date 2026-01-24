@@ -1,3 +1,4 @@
+module PontosCorridos where
 -- adiciona resultado numa classificacao
 
 criaTupla :: a -> b -> (a, b)
