@@ -1,56 +1,102 @@
 module Main where
 
-import Sorteador
-import Data.List (sortBy, minimumBy)
-import Data.Ord (comparing, Down (Down))
 import System.IO (hFlush, stdout)
 
--- Função para ler tudo numa mesma linha
+type Jogador = String
+
+limparTela :: IO ()
+limparTela = putStr "\ESC[2J\ESC[H"
+
 prompt :: String -> IO String
 prompt texto = do
     putStr texto
     hFlush stdout
     getLine
 
-
--- Construir lista com os jogadores cadastrados
-cadastrarJogadores :: Int -> IO [Jogador]
-cadastrarJogadores contador = do
-    putStrLn ("\n--- Jogador " ++ show contador ++ " ---")
-    
-    nome <- prompt "Nome (Enter vazio para encerrar): "
-    
-    if null nome
-        then return []
-        else do
-            estrelasStr <- prompt "Estrelas (1-5): "
-            let estrelasInt = read estrelasStr :: Int 
-            
-            restoDaLista <- cadastrarJogadores (contador + 1)
-            
-            return (Jogador nome estrelasInt : restoDaLista)
-
 main :: IO ()
 main = do
-    putStrLn "--- GERADOR DE TIMES ---"
+    limparTela
+    menuJogadores
+    putStrLn "FIM DO PROGRAMA"
 
-    qtdTimesStr <- prompt "Quantos times? "
-    let qtdTimes = read qtdTimesStr :: Int
+-- MENU JOGADORES
 
-    maxPorTimeStr <- prompt "Maximo de jogadores por time? "
-    let maxPorTime = read maxPorTimeStr :: Int
+processarJogadores :: String -> IO ()
+processarJogadores "0" = putStrLn "Saindo..."
+processarJogadores "1" = do
+    putStrLn "Chama Função cadastrar jogadores"
+    menuJogadores 
+processarJogadores "2" = do
+    putStrLn "Chama listar jogadores"
+    menuJogadores
+processarJogadores "3" = do
+    putStrLn "Chama selecionar jogadores para sorteio"
+    let jogadores = [] --- aqui será usado uma função que pega os jogadores no txt
+    menuSorteio jogadores
+processarJogadores _ = do
+    putStrLn "Opção Inválida!"
+    menuJogadores
 
-    putStrLn "\n>>> Iniciando cadastro..."
-    todosJogadores <- cadastrarJogadores 1
+menuJogadores :: IO ()
+menuJogadores = do
+    putStrLn "\n--- MENU JOGADORES ---"
+    putStrLn "1. Cadastrar Jogadores"
+    putStrLn "2. Listar Jogadores Cadastrados" 
+    putStrLn "3. Iniciar Sorteio" 
+    putStrLn "0. Sair do Sistema"
+    opcao <- prompt "Escolha uma opção: "
+    limparTela
+    processarJogadores opcao
 
-    putStrLn "\n=========================================="
-    putStrLn "          RESULTADO DOS TIMES             "
-    putStrLn "=========================================="
+-- MENU SORTEIO
 
-    let times = montarTimesEquilibrados qtdTimes maxPorTime todosJogadores
+-- OS JOGADORES PERMANECEM SALVOS COMO UM ATRIBUTO
+processarSorteio :: [Jogador] -> String -> IO ()
+processarSorteio js "0" = menuJogadores
+processarSorteio js "1" = do
+    putStrLn "Sorteio Rápido realizado!"
+    menuCampeonato js
+processarSorteio js "2" = do
+    putStrLn "Sorteio Não Deterministico realizado!"
+    menuCampeonato js
+processarSorteio js _ = do
+    putStrLn "Opção Inválida!"
+    menuSorteio js
 
-    mapM_ (\t -> do
-        putStrLn $ ">> " ++ nomeTime t ++ " (Força Total: " ++ show (forcaTotal t) ++ ")"
-        putStrLn $ "   Elenco: " ++ show [ (nomeJogador j, estrelas j) | j <- elenco t ]
-        putStrLn ""
-        ) times
+menuSorteio :: [Jogador] -> IO ()
+menuSorteio js = do
+    putStrLn "\n--- MENU SORTEIO ---"
+    putStrLn "1. Sorteio Rápido"
+    putStrLn "2. Sorteio Não Deterministico (16 jogadores)" 
+    putStrLn "0. Retornar Menu Jogadores"
+    opcao <- prompt "Escolha uma opção: "
+    limparTela
+    processarSorteio js opcao
+
+-- MENU CAMPEONATO
+
+processarCampeonato :: [Jogador] -> String -> IO ()
+processarCampeonato js "0" = menuSorteio js
+processarCampeonato js "1" = do
+    putStrLn "Iniciando Mata-Mata..."
+    menuCampeonato js
+processarCampeonato js "2" = do
+    putStrLn "Iniciando Pontos Corridos..."
+    menuCampeonato js
+processarCampeonato js "3" = do
+    putStrLn "Iniciando Campeonato Completo..."
+    menuCampeonato js
+processarCampeonato js _ = do
+    putStrLn "Opção Inválida!"
+    menuCampeonato js
+
+menuCampeonato :: [Jogador] -> IO ()
+menuCampeonato js = do
+    putStrLn "\n--- MENU CAMPEONATO ---"
+    putStrLn "1. Mata-Mata"
+    putStrLn "2. Pontos Corridos"
+    putStrLn "3. Completo"
+    putStrLn "0. Retornar Menu Sorteio"
+    opcao <- prompt "Escolha uma opção: "
+    limparTela
+    processarCampeonato js opcao
