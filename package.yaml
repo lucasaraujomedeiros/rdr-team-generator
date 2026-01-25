@@ -1,0 +1,15 @@
+name: rdr-team-generator
+version: 0.1.0.0
+
+dependencies:
+  - base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  rdr-team-generator:
+    main: Main.hs
+    source-dirs: app
+    dependencies:
+      - rdr-team-generator
