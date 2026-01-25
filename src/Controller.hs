@@ -1,5 +1,6 @@
 module Controller where
 
+import ListarJogadores (listarJogadores)
 import CadastraJogadores (cadastrarJogadores)
 import Sorteador (montarTimesEquilibrados, Time(..), Jogador(..)) -- importar depois tambem o não deterministico
 import MataMata (torneio)
@@ -9,7 +10,8 @@ cadastrarJogadoresController = cadastrarJogadores 1
 
 listarJogadoresController :: IO ()
 listarJogadoresController = do 
-    putStrLn "Listando Jogadores" -- TODO: função que lista os jogadores do .TXT
+    putStrLn "Listando Jogadores"
+    listarJogadores
 
 selecionarJogadoresController :: IO [Jogador]
 selecionarJogadoresController = do

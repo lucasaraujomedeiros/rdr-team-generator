@@ -10,6 +10,11 @@ prompt texto = do
     hFlush stdout
     getLine
 
+salvarJogador :: String -> Int -> IO ()
+salvarJogador nome estrelas =
+    appendFile "jogadores.txt" (nome ++ ";" ++ show estrelas ++ "\n")
+
+
 -- TODO: implementar uso do arquivo txt 
 -- TODO: implementar listagem dos jogadores
 -- TODO: implementar seleção de jogadores (recebe lista de nomes, e retorna um [Jogador(nome, estrelas)])
@@ -25,6 +30,6 @@ cadastrarJogadores contador = do
         then putStrLn "Fim do cadastro..."
         else do
             estrelasStr <- prompt "Estrelas (1-5): "
-            let estrelasInt = read estrelasStr :: Int 
-             -- aqui deve ser salvo nos arquivo txt 
+            let estrelasInt = read estrelasStr :: Int
+	    salvarJogador nome estrelasInt
             cadastrarJogadores (contador + 1)

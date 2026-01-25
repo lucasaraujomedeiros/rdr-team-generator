@@ -1,0 +1,7 @@
+rafael;5
+oscar;5
+araujo;5
+augusto;3
+franklin;4
+dalton;5
+gleydson;4

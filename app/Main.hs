@@ -70,8 +70,8 @@ processarSorteio js _ = do
 menuSorteio :: [Jogador] -> IO ()
 menuSorteio js = do
     putStrLn "\n--- MENU SORTEIO ---"
-    putStrLn "1. Sorteio Rápido"
-    putStrLn "2. Sorteio Não Deterministico (16 jogadores)" 
+    putStrLn "1. Sortear Times Equilibrados (16 jogadores)"
+    putStrLn "2. Sortear Times Equilibrados (Rápido)" 
     opcao <- prompt "Escolha uma opção: "
     limparTela
     processarSorteio js opcao

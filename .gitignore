@@ -1,4 +1,55 @@
+############################
+# Editores / SO
+############################
+.vscode/
+
+############################
+# Executáveis
+############################
 *.exe
-*.hi
+rdr-team-generator
+
+############################
+# Arquivos gerados pelo GHC
+############################
 *.o
-*.vscode/
+*.hi
+*.hie
+*.dyn_o
+*.dyn_hi
+*.prof
+*.aux
+*.hp
+*.eventlog
+
+############################
+# Cabal
+############################
+dist/
+dist-*/
+cabal-dev/
+.cabal-sandbox/
+cabal.sandbox.config
+cabal.project.local
+cabal.project.local~
+.ghc.environment.*
+
+############################
+# Stack
+############################
+.stack-work/
+.stack.sqlite3
+
+############################
+# Haskell – ferramentas e testes
+############################
+.hpc/
+.hsenv/
+.HTF/
+
+############################
+# Outros arquivos temporários
+############################
+*.chi
+*.chs.h
+
