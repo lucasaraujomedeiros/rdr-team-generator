@@ -1,0 +1,32 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.39.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           rdr-team-generator
+version:        0.1.0.0
+build-type:     Simple
+
+library
+  exposed-modules:
+      PontosCorridos
+      Sorteador
+  other-modules:
+      Paths_rdr_team_generator
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable rdr-team-generator
+  main-is: Main.hs
+  other-modules:
+      Paths_rdr_team_generator
+  hs-source-dirs:
+      app
+  build-depends:
+      base >=4.7 && <5
+    , rdr-team-generator
+  default-language: Haskell2010

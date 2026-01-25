@@ -1,5 +1,6 @@
 module Sorteador where
 
+import Control.Monad(guard)
 import Data.List (sortBy, minimumBy)
 import Data.Ord (comparing, Down (Down))
 
@@ -16,6 +17,8 @@ data Time = Time {
     elenco :: [Jogador],
     forcaTotal :: Int
 } deriving (Show)
+
+
 
 
 montarTimesEquilibrados :: Int -> Int -> [Jogador] -> [Time]
@@ -50,28 +53,81 @@ montarTimesEquilibrados qtdTimes maxPorTime jogadores =
 newtype Configuracao = Configuracao ([Time], [Jogador])
     deriving Show
 
-transformaLista :: a -> [a]
-transformaLista x = [x]
-
-adicionaCapitao :: [Time] -> [[Jogador]] -> [Time]
-adicionaCapitao [] _ = []
-adicionaCapitao (Time nome elenco forca:xs) (y:ys) = Time nome y forca : adicionaCapitao xs ys 
-
-atribuiCapitaes :: ([Time], [Jogador]) -> ([Time], [Jogador])
-atribuiCapitaes (times, jogadores) = (adicionaCapitao times capitaes, drop n jogadores)
+atribuiCapitaes :: [[Jogador]] -> [Jogador] -> ([[Jogador]] , [Jogador])
+atribuiCapitaes times jogadores =
+    (zipWith (:) jogadores times , drop n jogadores)
     where
         n = length times
-        capitaes = take n (map transformaLista jogadores)
 
 
+escolhe :: Int -> [a] -> [([a], [a])]
+escolhe 0 xs = [([], xs)]
+escolhe _ [] = []
+escolhe n (x:xs) = [(x:escolhidos, resto) | (escolhidos, resto) <- escolhe (n-1) xs] ++
+    [(escolhidos, x:resto) | (escolhidos, resto) <- escolhe n xs]
+
+
+geraConfiguracoesTimes :: [[Jogador]] -> [Jogador] -> Int -> [[[Jogador]]]
+geraConfiguracoesTimes timesIniciais jogadoresRestantes limite = do
+
+    (p1, resto1) <- escolhe 3 jogadoresRestantes
+    (p2, resto2) <- escolhe 3 resto1
+    (p3, resto3) <- escolhe 3 resto2
+    let p4 = resto3
+
+    let configuracaoAtual = zipWith (++) timesIniciais [p1, p2, p3, p4]
+
+    -- filtra times que não estão balanceados 
+
+    guard (estaBalanceado configuracaoAtual limite)
+
+    return configuracaoAtual
+
+
+
+totalEstrelas :: [Jogador] -> Int
+totalEstrelas [] = 0
+totalEstrelas ((Jogador _ estrelas):xs) = estrelas + totalEstrelas xs
+
+estaBalanceado :: [[Jogador]] -> Int -> Bool
+estaBalanceado times limiteDiferencaEstrelas =
+    maximum estrelasTimes - minimum estrelasTimes <= limiteDiferencaEstrelas
+    where
+        estrelasTimes = map totalEstrelas times
+
+-- processo completo
+geraPossibilidades :: [Jogador] -> Int -> [[[Jogador]]]
+geraPossibilidades jogadores limiteEstrelas = 
+    let (timesCapitaes, jogadoresRestantes) = atribuiCapitaes [[],[],[],[]] jogadores
+    in geraConfiguracoesTimes timesCapitaes jogadoresRestantes limiteEstrelas
+
+
+
+t1 = []
+t2 = []
+t3 = []
+t4 = []
 time1 = Time "time1" [] 0
 time2 = Time "time2" [] 0
 time3 = Time "time3" [] 0
 time4 = Time "time4" [] 0
-j1 = Jogador "lucas" 5
-j2 = Jogador "araujo" 5
-j3 = Jogador "bruno" 5 
+j1 = Jogador "lucas" 2
+j2 = Jogador "araujo" 1
+j3 = Jogador "bralio" 6
 j4 = Jogador "sereyh" 5
-j5 = Jogador "hushcak" 5
+j5 = Jogador "hushcak" 10
+j6 = Jogador "bruno" 1
+j7 = Jogador "resenha" 4
+j8 = Jogador "rebeca" 10
+j9 = Jogador "Matteus" 10
+j10 = Jogador "Matteus" 10
+
+j11 = Jogador "Fofinho" 10
+j12 = Jogador "Kaya" 7
+j13 = Jogador "Ponce" 2
+j14 = Jogador "Gleydson" 3
+j15 = Jogador "Tarcisio" 5
+j16 = Jogador "Thales" 1
 times = [time1, time2, time3, time4]
-jogadoress = [j1, j2, j3, j4, j5]
+
+jogadoress = [j1, j2, j3, j4, j5, j6, j7, j8, j9, j10, j11, j12, j13, j14, j15, j16]
