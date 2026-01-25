@@ -1,11 +1,7 @@
 module CadastraJogadores where
 
 import System.IO (hFlush, stdout)
-
-data Jogador = Jogador {
-    nomeJogador :: String,
-    estrelas :: Int
-} deriving (Show, Eq)
+import Sorteador (Jogador)
 
 -- Função para ler tudo numa mesma linha
 prompt :: String -> IO String
