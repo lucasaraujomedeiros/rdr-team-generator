@@ -12,7 +12,7 @@ prompt texto = do
 
 -- TODO: implementar uso do arquivo txt 
 -- TODO: implementar listagem dos jogadores
--- TODO: implementar seleção de jogadores (recebe lista de nomes, e retorna um Jogador(nome, estrelas))
+-- TODO: implementar seleção de jogadores (recebe lista de nomes, e retorna um [Jogador(nome, estrelas)])
 
 -- Construir lista com os jogadores cadastrados
 cadastrarJogadores :: Int -> IO ()
