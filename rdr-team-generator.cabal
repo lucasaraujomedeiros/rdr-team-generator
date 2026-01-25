@@ -12,6 +12,9 @@ library
   exposed-modules:
       PontosCorridos
       Sorteador
+      Controller
+      CadastraJogadores
+      MataMata
   other-modules:
       Paths_rdr_team_generator
   hs-source-dirs:
