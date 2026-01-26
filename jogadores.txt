@@ -5,3 +5,5 @@ augusto;3
 franklin;4
 dalton;5
 gleydson;4
+rafael;3
+veronica;3

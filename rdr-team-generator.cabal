@@ -13,9 +13,8 @@ library
       PontosCorridos
       Sorteador
       Controller
-      CadastraJogadores
+      Jogadores
       MataMata
-      ListarJogadores
   other-modules:
       Paths_rdr_team_generator
   hs-source-dirs:

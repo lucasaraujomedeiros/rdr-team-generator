@@ -1,7 +1,6 @@
 module Controller where
 
-import ListarJogadores (listarJogadores)
-import CadastraJogadores (cadastrarJogadores)
+import Jogadores (cadastrarJogadores, listarJogadores)
 import Sorteador (montarTimesEquilibrados, Time(..), Jogador(..)) -- importar depois tambem o não deterministico
 import MataMata (torneio)
 
