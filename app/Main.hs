@@ -4,8 +4,29 @@ import System.IO (hFlush, stdout)
 import Controller
 import Sorteador (Jogador(..), Time(..))
 
+-- LIMPAR TELA
+
 limparTela :: IO ()
 limparTela = putStr "\ESC[2J\ESC[H"
+
+-- BANNER INICIAL
+
+banner :: String
+banner = unlines
+    [ "                    ██████╗ ██████╗ ██████╗ "
+    , "                    ██╔══██╗██╔══██╗██╔══██╗"
+    , "                    ██████╔╝██║  ██║██████╔╝"
+    , "                    ██╔══██╗██║  ██║██╔══██╗"
+    , "                    ██║  ██║██████╔╝██║  ██║"
+    , "                    ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝"
+    , ""
+    , "          ═════════════════════════════════════════════"
+    , "                NON-DETERMINISTIC TEAM GENERATOR"
+    , "          ═════════════════════════════════════════════"
+    , ""
+    ]
+
+-- PROMPT PADRÃO
 
 prompt :: String -> IO String
 prompt texto = do
@@ -13,8 +34,26 @@ prompt texto = do
     hFlush stdout
     getLine
 
+-- PROMPT ENTER PISCANDO
+
+promptEnterPiscando :: IO ()
+promptEnterPiscando = do
+    putStrLn ""
+    putStr (blinkOn ++ "                      ENTER para iniciar..." ++ resetAll)
+    hFlush stdout
+    _ <- getLine
+    return ()
+  where
+    blinkOn  = "\ESC[5m"
+    resetAll = "\ESC[0m"
+
+-- MAIN
+
 main :: IO ()
 main = do
+    limparTela
+    putStrLn banner
+    promptEnterPiscando
     limparTela
     menuJogadores
     putStrLn "FIM DO PROGRAMA"
@@ -33,7 +72,7 @@ processarJogadores "2" = do
     menuJogadores
 processarJogadores "3" = do
     putStrLn "Chama selecionar jogadores para sorteio"
-    jogadores <- selecionarJogadoresController --- aqui será usado uma função que pega os jogadores no txt
+    jogadores <- selecionarJogadoresController
     menuSorteio jogadores
 processarJogadores _ = do
     putStrLn "Opção Inválida!"
@@ -52,7 +91,6 @@ menuJogadores = do
 
 -- MENU SORTEIO
 
--- OS JOGADORES PERMANECEM SALVOS COMO UM ATRIBUTO
 processarSorteio :: [Jogador] -> String -> IO ()
 processarSorteio js "0" = menuJogadores
 processarSorteio js "1" = do
@@ -82,15 +120,12 @@ processarCampeonato :: [Time] -> String -> IO ()
 processarCampeonato ts "1" = do
     putStrLn "Iniciando Mata-Mata..."
     mataMataController ts
-    -- menuCampeonato ts
 processarCampeonato ts "2" = do
     putStrLn "Iniciando Pontos Corridos..."
     pontosCorridosController ts
-    -- menuCampeonato ts
 processarCampeonato ts "3" = do
     putStrLn "Iniciando Campeonato Completo..."
     campeonatoCompletoController ts
-    -- menuCampeonato ts
 processarCampeonato ts _ = do
     putStrLn "Opção Inválida!"
     menuCampeonato ts
@@ -105,3 +140,4 @@ menuCampeonato ts = do
     opcao <- prompt "Escolha uma opção: "
     limparTela
     processarCampeonato ts opcao
+
