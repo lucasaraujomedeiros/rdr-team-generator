@@ -19,7 +19,10 @@ rodada times = do
     let timeB = last times
     let meio = init (tail times)
 
-    putStr (timeA ++ " X " ++ timeB ++ "\nQual time venceu? (A ou B) ")
+    putStr ("===============x==============\n\t" 
+            ++ timeA ++ " X " ++ timeB ++ "\n" ++
+            "===============x==============" ++
+            "\nQual time venceu? (A ou B) ")
     hFlush stdout
     vencedor <- getLine
 
@@ -32,6 +35,7 @@ rodada times = do
 -- Normaliza se não for potência de 2
 primeiraRodada :: [String] -> IO [String]
 primeiraRodada times = do
+
     let n = length times
     let pot2 = proximaPotenciaDe2 n
     let numPassamDireto = pot2 `mod` n
@@ -47,6 +51,7 @@ torneio :: [String] -> IO ()
 torneio [] = putStrLn "Nenhum time no torneio."
 torneio [vencedor] = putStrLn (" > O grande vencedor é: " ++ vencedor)
 torneio times = do
+
     let n = length times
     let pot2 = proximaPotenciaDe2 n
 
@@ -57,7 +62,7 @@ torneio times = do
 
     if length timesNovaRodada > 1
         then do
-            putStrLn ("---------" ++ " Nova Rodada " ++ "---------")
+            putStrLn ("\n---------" ++ " Nova Rodada " ++ "---------")
             putStrLn ("Times da Rodada: " ++ show timesNovaRodada)
             torneio timesNovaRodada
         else torneio timesNovaRodada
