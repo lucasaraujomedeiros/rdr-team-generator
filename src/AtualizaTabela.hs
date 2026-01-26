@@ -9,7 +9,7 @@ header = "time;pontos;vitorias;partidas;golsPro;golsContra\n"
 joinBy :: Char -> [String] -> String
 joinBy _ []     = ""
 joinBy _ [x]    = x
-joinBy c (x:xs) = x ++ [c] ++ joinWith c xs
+joinBy c (x:xs) = x ++ [c] ++ joinBy c xs
 
 coletaValido :: (a -> Maybe b) -> [a] -> [b]
 coletaValido _ [] = []
@@ -58,7 +58,7 @@ parseLinha s =
 
 linhaToString :: Linha -> String
 linhaToString (t,p,v,pa,gp,gc) =
-    joinWith ';' [t, show p, show v, show pa, show gp, show gc]
+    joinBy ';' [t, show p, show v, show pa, show gp, show gc]
 
 splitBy :: Char -> String -> [String]
 splitBy _ "" = [""]

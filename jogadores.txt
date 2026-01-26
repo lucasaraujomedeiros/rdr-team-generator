@@ -1,0 +1,4 @@
+rafael;5;true
+oscar;5;false
+frida;2;false
+
