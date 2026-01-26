@@ -6,9 +6,10 @@ O programa também conta com funções auxiliares para as outras necessidades do
 
 ## Como rodar o programa
 
-* É necessário ter o Haskell Stack instalado
+* É necessário ter o [Haskell Stack](https://docs.haskellstack.org/en/stable/) instalado
 
-  Rode os seguintes comandos no terminal:
+
+Rode os seguintes comandos no terminal:
 ```bash
 stack build
 stack run
