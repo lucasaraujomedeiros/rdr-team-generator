@@ -43,7 +43,7 @@ sorteioRapidoController = do
     mostrarTimes times 
     return times
 
-sorteioNaoDeterministicoController :: IO [Time]
+sorteioNaoDeterministicoController :: IO ()
 sorteioNaoDeterministicoController = do 
     putStrLn "rodando o não deterministico" -- TODO:  implementar a função que roda o não deterministico
    

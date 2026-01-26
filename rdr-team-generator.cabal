@@ -10,17 +10,22 @@ build-type:     Simple
 
 library
   exposed-modules:
+      AtualizaTabela
+      CadastraJogadores
+      Controller
+      CriaTabela
+      Jogadores
+      ListarJogadores
+      MataMata
       PontosCorridos
       Sorteador
-      Controller
-      Jogadores
-      MataMata
   other-modules:
       Paths_rdr_team_generator
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , random
   default-language: Haskell2010
 
 executable rdr-team-generator
@@ -31,5 +36,6 @@ executable rdr-team-generator
       app
   build-depends:
       base >=4.7 && <5
+    , random
     , rdr-team-generator
   default-language: Haskell2010

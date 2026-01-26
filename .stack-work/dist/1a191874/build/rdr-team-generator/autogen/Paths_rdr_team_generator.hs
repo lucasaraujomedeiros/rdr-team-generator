@@ -47,7 +47,7 @@ getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: 
 
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 bindir     = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\bin"
-libdir     = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\lib\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0-3Y2WgZC54nS65UaLH3NlLu-rdr-team-generator"
+libdir     = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\lib\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0-6ICuFbjzTlYBtdldqLi0xU-rdr-team-generator"
 dynlibdir  = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\lib\\x86_64-windows-ghc-9.10.3-b42a"
 datadir    = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\share\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0"
 libexecdir = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\libexec\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0"
