@@ -1,14 +1,34 @@
 module Jogadores where
 
 import System.IO (readFile, hFlush, stdout)
-import Sorteador (Jogador)
+import Sorteador (Jogador(..))
+
+-- Função para ler tudo numa mesma linha
+prompt :: String -> IO String
+prompt texto = do
+    putStr texto
+    hFlush stdout
+    getLine
+
+split :: Char -> String -> [String]
+split _ [] = [""]
+split sep (c:cs)
+    | c == sep  = "" : resto
+    | otherwise = (c : head resto) : tail resto
+  where
+    resto = split sep cs
 
 formatarJogador :: String -> String
 formatarJogador linha =
-    case break (== ';') linha of
-        (nome, ';' : estrelas) ->
-            nome ++ " - ⭐ " ++ estrelas
-        _ -> linha 
+    case split ';' linha of
+        [nome, estrelas, isSelect] ->
+            marcador ++ " " ++ nome ++ "\t" ++ " ⭐ " ++ estrelas
+          where
+            marcador =
+                if isSelect == "true"
+                    then "( X )"
+                    else "(   )"
+        _ -> linha
 
 listarJogadores :: IO ()
 listarJogadores = do
@@ -21,18 +41,9 @@ listarJogadores = do
         else mapM_ (putStrLn . formatarJogador) (lines conteudo)
 
 
-
-
--- Função para ler tudo numa mesma linha
-prompt :: String -> IO String
-prompt texto = do
-    putStr texto
-    hFlush stdout
-    getLine
-
 salvarJogador :: String -> Int -> IO ()
 salvarJogador nome estrelas =
-    appendFile "jogadores.txt" (nome ++ ";" ++ show estrelas ++ "\n")
+    appendFile "jogadores.txt" (nome ++ ";" ++ show estrelas ++ ";true\n")
 
 
 -- TODO: implementar uso do arquivo txt 
@@ -53,3 +64,10 @@ cadastrarJogadores contador = do
             let estrelasInt = read estrelasStr :: Int
 	    salvarJogador nome estrelasInt
             cadastrarJogadores (contador + 1)
+
+
+-- selecionar jogadores por indice
+-- switch true/false
+
+
+
