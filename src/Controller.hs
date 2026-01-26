@@ -1,46 +1,54 @@
 module Controller where
 
-import Jogadores (cadastrarJogadores, listarJogadores)
+import Jogadores (cadastrarJogadores, listarJogadores, getJogadoresSelecionados, selecionarJogadores, prompt)
 import Sorteador (montarTimesEquilibrados, Time(..), Jogador(..)) -- importar depois tambem o não deterministico
 import MataMata (torneio)
+
+mostrarTimes :: [Time] -> IO ()
+mostrarTimes times = 
+    mapM_ (\t -> do
+        putStrLn $ ">> " ++ nomeTime t ++ " (Força Total: " ++ show (forcaTotal t) ++ ")"
+        putStrLn $ "   Elenco: " ++ show [ (nomeJogador j, estrelas j) | j <- elenco t ]
+        putStrLn ""
+        ) times
+
+
 
 cadastrarJogadoresController :: IO ()
 cadastrarJogadoresController = cadastrarJogadores 1
 
 listarJogadoresController :: IO ()
 listarJogadoresController = do 
-    putStrLn "Listando Jogadores"
     listarJogadores
 
-selecionarJogadoresController :: IO [Jogador]
+selecionarJogadoresController :: IO ()
 selecionarJogadoresController = do
-    putStr "jogadores selecionados -> " -- TODO: chamar função selecionar jogadores do 'CadastraJogadores'
-    return []
+    selecionarJogadores
     
-sorteioRapidoController :: [Jogador] -> IO [Time]
-sorteioRapidoController js = do
-    let numTimes = 3 -- fazer prompt para pegar esses dados
-    let numJogPorTime = 2
-    let times = montarTimesEquilibrados numTimes numJogPorTime js 
-    putStrLn (show times)
-    return []
+sorteioRapidoController :: IO [Time]
+sorteioRapidoController = do
+    putStrLn "\n--- Sorteio Rápido ---"
 
-sorteioNaoDeterministicoController :: [Jogador] -> IO [Time]
-sorteioNaoDeterministicoController js = do 
+    qtdTimes_str <- prompt "Quantidade de Times: "
+    let qtdTimes = read qtdTimes_str :: Int
+
+    maxJog_str <- prompt "Máximo de jogadores por time: "
+    let maxJog = read maxJog_str :: Int
+
+    jogadores <- getJogadoresSelecionados
+    let times = montarTimesEquilibrados qtdTimes maxJog jogadores
+    mostrarTimes times 
+    return times
+
+sorteioNaoDeterministicoController :: IO [Time]
+sorteioNaoDeterministicoController = do 
     putStrLn "rodando o não deterministico" -- TODO:  implementar a função que roda o não deterministico
     return []
 
-pontosCorridosController :: [Time] -> IO ()
-pontosCorridosController ts = do
-    putStrLn "rodando os pontos corridos" -- TODO: implementar a função que roda o pontos corridos
 
 mataMataController :: [Time] -> IO ()
 mataMataController ts = torneio [nomeTime t | t <- ts]
 
-campeonatoCompletoController :: [Time] -> IO ()
-campeonatoCompletoController ts = do
-    let timesAposPontosCorridos = [] -- chamar os pontos corridos
-    torneio [nomeTime t | t <- timesAposPontosCorridos]
 
 
 
