@@ -19,12 +19,7 @@ data Time = Time {
 } deriving (Show)
 
 
-atribuiElenco :: Time -> [Jogador] -> Time
-atribuiElenco time novoElenco =
-  time
-    { elenco = novoElenco
-    , forcaTotal = somaForca novoElenco
-    }
+
 
 montarTimesEquilibrados :: Int -> Int -> [Jogador] -> [Time]
 montarTimesEquilibrados qtdTimes maxPorTime jogadores =

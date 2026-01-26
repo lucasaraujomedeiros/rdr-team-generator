@@ -1,7 +1,7 @@
 module Controller where
 
 import Jogadores (cadastrarJogadores, listarJogadores, getJogadoresSelecionados, selecionarJogadores, prompt)
-import Sorteador (montarTimesEquilibrados, geraPossibilidades, totalEstrelas,Time(..), Jogador(..)) -- importar depois tambem o não deterministico
+import Sorteador (montarTimesEquilibrados, geraPossibilidades, Time(..), Jogador(..)) -- importar depois tambem o não deterministico
 import MataMata (torneio)
 import System.Random (randomRIO)
 
@@ -58,7 +58,7 @@ sorteioNaoDeterministicoController = do
     configuracaoAleatoria <- pegaAleatorio configuracoes
     
     mostrarTimes configuracaoAleatoria
-  
+    
 
 pegaAleatorio :: [a] -> IO a
 pegaAleatorio xs = do

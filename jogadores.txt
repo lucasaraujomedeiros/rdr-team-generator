@@ -1,8 +1,8 @@
-tiago;4;false
+tiago;4;true
 mauro;5;true
-tina;3;false
+tina;3;true
 junior;3;true
 lucas;4;true
-jorge;3;false
-bruno;5;false
+jorge;3;true
+bruno;5;true
 juca;2;true

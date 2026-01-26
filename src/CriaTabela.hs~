@@ -1,5 +1,3 @@
-module CriaTabela where
-
 type Linha = (String, Int, Int, Int, Int, Int)
 
 arquivo :: FilePath

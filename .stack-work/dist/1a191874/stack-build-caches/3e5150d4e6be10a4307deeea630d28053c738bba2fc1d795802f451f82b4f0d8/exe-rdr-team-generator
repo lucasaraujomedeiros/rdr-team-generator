@@ -1,14 +1,10 @@
-? C:\Users\Lucas\AppData\Local\Programs\stack\x86_64-windows\ghc-9.10.3\lib\x86_64-windows-ghc-9.10.3\rts-1.0.2\include\ghcversion.h
-: hash: 7038bb968ecc358729edd5d1e72a638409aaf5ea6ab13ce6ec7f253daa3b6529
 ? C:\Users\Lucas\programacao\rdr-team-generator\.stack-work\dist\1a191874\build\rdr-team-generator\autogen\Paths_rdr_team_generator.hs
-: hash: 82762846b8a5a4f5ec064936897a7b5524d3e303641148cd2b4668af7fbc6f4c
-C:\Users\Lucas\programacao\rdr-team-generator\.stack-work\dist\1a191874\build\rdr-team-generator\autogen\cabal_macros.h:
-  hash: 76cee683c812ac2ffcacf1bac70777b76b8f75672496bcf0f6d6635731392f9f
+: hash: bc1f8e6603c2ab4abf5b2ae682d2df78b9421d3c55c02ee40b7edc992039be48
 C:\Users\Lucas\programacao\rdr-team-generator\app\Main.hs:
-  hash: d6e9a075bcf30ee59f61941dbed07f84d11cfc6aa1fbfa033f262880c8656604
+  hash: b85692bb1f638d62036798ddbde0f77135b5a43d01b1cce70efc07f45c6e929c
 C:\Users\Lucas\programacao\rdr-team-generator\package.yaml:
-  hash: 22084f9b3549e2e06a9ae6d7d684f213ef7a47da4efe2051fafac5d97c593326
+  hash: a95650887102f9a83c782e13fbe8ddeaf2c4ae4137e0ae1d21946e929a722d71
 C:\Users\Lucas\programacao\rdr-team-generator\rdr-team-generator.cabal:
-  hash: 8a17d3479e29b89588c8fa37a5159fb02dc1affe3aa35f92043df6146ebc658e
+  hash: a66fd229dd665e88afa5482dc9c762ddf35eb4e80361d7fd07ca7773964ae2f5
 C:\ghcup\ghc\9.10.3\lib\x86_64-windows-ghc-9.10.3\rts-1.0.2\include\ghcversion.h:
   hash: 7038bb968ecc358729edd5d1e72a638409aaf5ea6ab13ce6ec7f253daa3b6529
