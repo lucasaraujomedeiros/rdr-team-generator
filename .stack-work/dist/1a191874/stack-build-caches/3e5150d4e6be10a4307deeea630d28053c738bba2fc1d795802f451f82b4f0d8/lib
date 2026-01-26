@@ -1,5 +1,7 @@
 C:\Users\Lucas\programacao\rdr-team-generator\.stack-work\dist\1a191874\build\autogen\Paths_rdr_team_generator.hs:
   hash: fbb1632cea82d2ede90eddaf6b65eff04fba9927796b205a7a0904958f160ace
+C:\Users\Lucas\programacao\rdr-team-generator\.stack-work\dist\1a191874\build\autogen\cabal_macros.h:
+  hash: 0153ad431a004e9c9649e5212ebe2831bf4bbe140fad5de78de10a17e3007902
 C:\Users\Lucas\programacao\rdr-team-generator\package.yaml:
   hash: a95650887102f9a83c782e13fbe8ddeaf2c4ae4137e0ae1d21946e929a722d71
 C:\Users\Lucas\programacao\rdr-team-generator\rdr-team-generator.cabal:
@@ -9,7 +11,7 @@ C:\Users\Lucas\programacao\rdr-team-generator\src\AtualizaTabela.hs:
 C:\Users\Lucas\programacao\rdr-team-generator\src\CadastraJogadores.hs:
   hash: d801a8f152c1375e6eb59564277b793e90ad6cb893e9343235b95f0fff2683fa
 C:\Users\Lucas\programacao\rdr-team-generator\src\Controller.hs:
-  hash: 5633c9c475fba1a31d6067a7c610db1cb30a935abbfa2c70bf6beccfa1a8cee7
+  hash: aa5af5aef83e3dfd73e312543c17ece8eceddfeeeb24b3fb7647bb0568b72af1
 C:\Users\Lucas\programacao\rdr-team-generator\src\CriaTabela.hs:
   hash: cc93ab7b9b7f0d184e1d45ae631d00fb0bc27a1de10d98fd340938bf584c42bd
 C:\Users\Lucas\programacao\rdr-team-generator\src\Jogadores.hs:
@@ -21,6 +23,6 @@ C:\Users\Lucas\programacao\rdr-team-generator\src\MataMata.hs:
 C:\Users\Lucas\programacao\rdr-team-generator\src\PontosCorridos.hs:
   hash: f0c2ede6d7c1d8a029f180ad869422f15aca66fe99a2dd151ad53a88f52461ae
 C:\Users\Lucas\programacao\rdr-team-generator\src\Sorteador.hs:
-  hash: 0d019be1840e4a011e060fbe5a0ca7385f0939abfbc0bbe40b0fcdb2f5fc2372
+  hash: 1962a61ba198ff11124ccafd4a5d81616ae9771501dd27ad44687ce42e54cf9c
 C:\ghcup\ghc\9.10.3\lib\x86_64-windows-ghc-9.10.3\rts-1.0.2\include\ghcversion.h:
   hash: 7038bb968ecc358729edd5d1e72a638409aaf5ea6ab13ce6ec7f253daa3b6529

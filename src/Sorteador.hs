@@ -23,7 +23,7 @@ atribuiElenco :: Time -> [Jogador] -> Time
 atribuiElenco time novoElenco =
   time
     { elenco = novoElenco
-    , forcaTotal = somaForca novoElenco
+    , forcaTotal = totalEstrelas novoElenco
     }
 
 montarTimesEquilibrados :: Int -> Int -> [Jogador] -> [Time]

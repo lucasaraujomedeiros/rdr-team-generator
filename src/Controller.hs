@@ -1,7 +1,7 @@
 module Controller where
 
 import Jogadores (cadastrarJogadores, listarJogadores, getJogadoresSelecionados, selecionarJogadores, prompt)
-import Sorteador (montarTimesEquilibrados, geraPossibilidades, totalEstrelas,Time(..), Jogador(..)) -- importar depois tambem o não deterministico
+import Sorteador
 import MataMata (torneio)
 import System.Random (randomRIO)
 
@@ -39,12 +39,11 @@ sorteioRapidoController = do
     jogadores <- getJogadoresSelecionados
     let times = montarTimesEquilibrados qtdTimes maxJog jogadores
 
-    inicializarTimes = map (\n -> Time { nomeTime = "Time " ++ show n, elenco = [], forcaTotal = 0 }) [1, 2, 3, 4]
 
     mostrarTimes times 
     return times
 
-sorteioNaoDeterministicoController :: IO ()
+sorteioNaoDeterministicoController :: IO [Time]
 sorteioNaoDeterministicoController = do 
     putStrLn "rodando o não deterministico" -- TODO:  implementar a função que roda o não deterministico
    
@@ -57,8 +56,12 @@ sorteioNaoDeterministicoController = do
 
     configuracaoAleatoria <- pegaAleatorio configuracoes
     
-    mostrarTimes configuracaoAleatoria
-  
+    
+    let inicializarTimes = map (\n -> Time { nomeTime = "Time " ++ show n, elenco = [], forcaTotal = 0 }) [1..4]
+    let times = zipWith atribuiElenco inicializarTimes  configuracaoAleatoria
+     
+    mostrarTimes times
+    return times  
 
 pegaAleatorio :: [a] -> IO a
 pegaAleatorio xs = do
