@@ -63,17 +63,15 @@ main = do
 processarJogadores :: String -> IO ()
 processarJogadores "0" = putStrLn "Saindo..."
 processarJogadores "1" = do
-    putStrLn "Chama Função cadastrar jogadores"
     cadastrarJogadoresController
     menuJogadores 
 processarJogadores "2" = do
-    putStrLn "Chama listar jogadores"
     listarJogadoresController
     menuJogadores
 processarJogadores "3" = do
-    putStrLn "Chama selecionar jogadores para sorteio"
-    jogadores <- selecionarJogadoresController
-    menuSorteio jogadores
+    selecionarJogadoresController
+    menuJogadores
+processarJogadores "4" = menuSorteio
 processarJogadores _ = do
     putStrLn "Opção Inválida!"
     menuJogadores
@@ -83,7 +81,8 @@ menuJogadores = do
     putStrLn "\n--- MENU JOGADORES ---"
     putStrLn "1. Cadastrar Jogadores"
     putStrLn "2. Listar Jogadores Cadastrados" 
-    putStrLn "3. Iniciar Sorteio" 
+    putStrLn "3. Selecionar Jogadores" 
+    putStrLn "4. Iniciar Sorteio" 
     putStrLn "0. Sair do Sistema"
     opcao <- prompt "Escolha uma opção: "
     limparTela
@@ -91,53 +90,51 @@ menuJogadores = do
 
 -- MENU SORTEIO
 
-processarSorteio :: [Jogador] -> String -> IO ()
-processarSorteio js "0" = menuJogadores
-processarSorteio js "1" = do
-    putStrLn "Sorteio Rápido realizado!"
-    times <- sorteioRapidoController js
+processarSorteio :: String -> IO ()
+processarSorteio "0" = menuJogadores
+processarSorteio "1" = do
+    times <- sorteioRapidoController
     menuCampeonato times
-processarSorteio js "2" = do
+processarSorteio "2" = do
     putStrLn "Sorteio Não Deterministico realizado!"
-    times <- sorteioNaoDeterministicoController js
+    times <- sorteioNaoDeterministicoController
     menuCampeonato times
-processarSorteio js _ = do
+processarSorteio "0" = do
+    
+    menuJogadores
+processarSorteio _ = do
     putStrLn "Opção Inválida!"
-    menuSorteio js
+    menuSorteio
 
-menuSorteio :: [Jogador] -> IO ()
-menuSorteio js = do
+menuSorteio :: IO ()
+menuSorteio = do
     putStrLn "\n--- MENU SORTEIO ---"
-    putStrLn "1. Sortear Times Equilibrados (16 jogadores)"
-    putStrLn "2. Sortear Times Equilibrados (Rápido)" 
+    putStrLn "1. Sortear Times Equilibrados (Rápido)" 
+    putStrLn "2. Sortear Times Equilibrados (16 jogadores)"
+    putStrLn "0. Retornar ao Menu Jogadores"
     opcao <- prompt "Escolha uma opção: "
     limparTela
-    processarSorteio js opcao
+    processarSorteio opcao
 
 -- MENU CAMPEONATO
 
-processarCampeonato :: [Time] -> String -> IO ()
-processarCampeonato ts "1" = do
-    putStrLn "Iniciando Mata-Mata..."
+processarCampeonato :: String -> [Time] -> IO ()
+processarCampeonato "1" ts = do
+    putStrLn "      ===== MATA-MATA ====="
     mataMataController ts
-processarCampeonato ts "2" = do
-    putStrLn "Iniciando Pontos Corridos..."
-    pontosCorridosController ts
-processarCampeonato ts "3" = do
-    putStrLn "Iniciando Campeonato Completo..."
-    campeonatoCompletoController ts
-processarCampeonato ts _ = do
+    putStr "feature: fazer outra interação com enter, para voltar para o menu-jogadores por exemṕlo"
+processarCampeonato "0" _ = do
+    menuJogadores
+processarCampeonato _ ts = do
     putStrLn "Opção Inválida!"
     menuCampeonato ts
 
 menuCampeonato :: [Time] -> IO ()
 menuCampeonato ts = do
     putStrLn "\n--- MENU CAMPEONATO ---"
-    putStrLn "1. Mata-Mata"
-    putStrLn "2. Pontos Corridos"
-    putStrLn "3. Completo"
-    putStrLn "0. Retornar Menu Sorteio"
+    putStrLn "1. Jogar Mata-Mata"
+    putStrLn "0. Retornar Menu Jogadores"
     opcao <- prompt "Escolha uma opção: "
     limparTela
-    processarCampeonato ts opcao
+    processarCampeonato opcao ts
 
