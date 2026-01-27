@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.39.1.
+-- This file has been generated from package.yaml by hpack version 0.36.1.
 --
 -- see: https://github.com/sol/hpack
 
@@ -37,5 +37,18 @@ executable rdr-team-generator
   build-depends:
       base >=4.7 && <5
     , random
+    , rdr-team-generator
+  default-language: Haskell2010
+
+test-suite project-test
+  type: exitcode-stdio-1.0
+  main-is: Specs.hs
+  other-modules:
+      Paths_rdr_team_generator
+  hs-source-dirs:
+      tests
+  build-depends:
+      base >=4.7 && <5
+    , hspec
     , rdr-team-generator
   default-language: Haskell2010

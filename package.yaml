@@ -16,3 +16,12 @@ executables:
     dependencies:
       - random
       - rdr-team-generator
+
+
+tests:
+  project-test:
+    main: Specs.hs
+    source-dirs: tests
+    dependencies:
+      - rdr-team-generator
+      - hspec

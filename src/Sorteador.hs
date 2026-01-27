@@ -16,7 +16,7 @@ data Time = Time {
     nomeTime :: String,
     elenco :: [Jogador],
     forcaTotal :: Int
-} deriving (Show)
+} deriving (Show, Eq)
 
 
 atribuiElenco :: Time -> [Jogador] -> Time
