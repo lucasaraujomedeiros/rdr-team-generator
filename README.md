@@ -13,3 +13,6 @@ Rode os seguintes comandos no terminal:
 ```bash
 stack build
 stack run
+```
+
+Para rodar os testes é necessário remover o arquivo rdr-team-generator.cabal

@@ -46,12 +46,12 @@ getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: 
 
 
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
-bindir     = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\bin"
-libdir     = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\lib\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0-2CyqWKZ4e5kIyLkXnxKKzH"
-dynlibdir  = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\lib\\x86_64-windows-ghc-9.10.3-b42a"
-datadir    = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\share\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0"
-libexecdir = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\libexec\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0"
-sysconfdir = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\8297a369\\etc"
+bindir     = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\7b78a46a\\bin"
+libdir     = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\7b78a46a\\lib\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0-2CyqWKZ4e5kIyLkXnxKKzH"
+dynlibdir  = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\7b78a46a\\lib\\x86_64-windows-ghc-9.10.3-b42a"
+datadir    = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\7b78a46a\\share\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0"
+libexecdir = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\7b78a46a\\libexec\\x86_64-windows-ghc-9.10.3-b42a\\rdr-team-generator-0.1.0.0"
+sysconfdir = "C:\\Users\\Lucas\\programacao\\rdr-team-generator\\.stack-work\\install\\7b78a46a\\etc"
 
 getBinDir     = catchIO (getEnv "rdr_team_generator_bindir")     (\_ -> return bindir)
 getLibDir     = catchIO (getEnv "rdr_team_generator_libdir")     (\_ -> return libdir)
