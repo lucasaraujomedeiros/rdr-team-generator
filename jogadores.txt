@@ -4,3 +4,4 @@ rafael;1;true
 araujo;10;true
 luscas;10;true
 lcaas;10;true
+rafael;1;true

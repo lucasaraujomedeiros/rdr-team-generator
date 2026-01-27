@@ -91,7 +91,7 @@ menuJogadores = do
 
 processarJogadores :: String -> IO ()
 processarJogadores "0" = putStrLn "Saindo..."
-processarJogadores "1" = cadastrarJogadoresController >> menuJogadores
+processarJogadores "1" = cadastrarJogadoresController >> limparTela >> menuJogadores
 processarJogadores "2" = listarJogadoresController >> menuJogadores
 processarJogadores "3" = selecionarJogadoresController >> menuJogadores
 processarJogadores "4" = menuSorteio
