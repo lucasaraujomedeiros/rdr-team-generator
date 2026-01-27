@@ -53,3 +53,4 @@ cabal.project.local~
 *.chi
 *.chs.h
 
+*~

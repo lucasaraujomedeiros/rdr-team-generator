@@ -66,10 +66,13 @@ cadastrarJogadores contador = do
     if null nome
         then putStrLn "Fim do cadastro..."
         else do
-            estrelasStr <- prompt "Estrelas (1-5): "
-            let estrelasInt = read estrelasStr :: Int
-	    salvarJogador nome estrelasInt
-            cadastrarJogadores (contador + 1)
+            estrelasStr <- prompt "Estrelas (1-10): "
+            if read estrelasStr > 10
+                then putStrLn "estrelas devem ser no máximo até 10"
+            else do
+                let estrelasInt = read estrelasStr :: Int
+                salvarJogador nome estrelasInt
+                cadastrarJogadores (contador + 1)
 
 
 
