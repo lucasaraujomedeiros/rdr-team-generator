@@ -15,6 +15,7 @@ mostrarTimes times =
 
 
 
+
 cadastrarJogadoresController :: IO ()
 cadastrarJogadoresController = cadastrarJogadores 1
 
