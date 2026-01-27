@@ -5,6 +5,10 @@ import Sorteador
 import MataMata (torneio)
 import System.Random (randomRIO)
 
+
+limpaTela :: IO ()
+limpaTela = putStr "\ESC[2J\ESC[H"
+
 mostrarTimes :: [Time] -> IO ()
 mostrarTimes times = 
     mapM_ (\t -> do
@@ -59,18 +63,39 @@ sorteioNaoDeterministicoController = do
             let limiteEstrelas = read limiteEstrelasStr :: Int
 
             let configuracoes = geraPossibilidades jogadores limiteEstrelas
-            configuracaoAleatoria <- pegaAleatorio configuracoes
+            times <- pegaTimesAleatorio configuracoes
 
-            let inicializarTimes =
-                  map (\n -> Time { nomeTime = "Time " ++ show n
-                                  , elenco = []
-                                  , forcaTotal = 0
-                                  }) [1..4]
+            refresh 1 configuracoes times
 
-            let times = zipWith atribuiElenco inicializarTimes configuracaoAleatoria
 
-            mostrarTimes times
-            return times
+pegaTimesAleatorio :: [[[Jogador]]] -> IO [Time]
+pegaTimesAleatorio configuracoes = do
+    
+    configuracaoAleatoria <- pegaAleatorio configuracoes
+
+    let inicializarTimes =
+          map (\n -> Time { nomeTime = "Time " ++ show n
+                          , elenco = []
+                          , forcaTotal = 0
+                          }) [1..4]
+
+    let times = zipWith atribuiElenco inicializarTimes configuracaoAleatoria
+ 
+    return times
+
+refresh :: Int -> [[[Jogador]]]-> [Time] -> IO [Time]
+refresh 1 configuracoes times = do
+    limpaTela
+    mostrarTimes times
+
+    refreshStr <- prompt "(1) Refresh\n(2) Ok "
+    let opcaoRefresh = read refreshStr :: Int
+
+    novosTimes <- pegaTimesAleatorio configuracoes
+    refresh opcaoRefresh configuracoes novosTimes
+
+refresh 2 _ times =
+    return times
 
 pegaAleatorio :: [a] -> IO a
 pegaAleatorio xs = do
