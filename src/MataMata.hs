@@ -1,4 +1,8 @@
-module MataMata (torneio, numJogosTorneio) where
+module MataMata
+  ( torneio
+  , numJogosTorneio
+  , proximaPotenciaDe2
+  ) where
 
 import System.IO (hFlush, stdout)
 
